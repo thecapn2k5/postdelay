@@ -33,11 +33,16 @@ require_once('utils.php');
 
 require_once('sdk/src/facebook.php');
 
+echo "App ID ", AppInfo::appID(), " App Secret ", (string) AppInfo::appSecret();
+echo "<br>App ID 497389580317915 App Secret f58ae5e2d4aafeff7c6a0f5f15734fec = Dev App";
+echo "<br>App ID 163628067121578 App Secret 8f96b758eb85189d6f7ba8505e291d61 = Main App";
+
 $facebook = new Facebook(array(
   'appId'  => AppInfo::appID(),
   'secret' => AppInfo::appSecret(),
   'sharedSession' => true,
   'trustForwarded' => true,
+  'oauth' => true,
 ));
 
 $user_id = $facebook->getUser();
@@ -101,12 +106,12 @@ $app_name = idx($app_info, 'name', '');
     <meta property="og:title" content="<?php echo he($app_name); ?>" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="<?php echo AppInfo::getUrl(); ?>" />
-    <meta property="og:image" content="<?php echo AppInfo::getUrl('/logo.png'); ?>" />
+    <meta property="og:image" content="<?php echo AppInfo::getUrl('images/icon.ico'); ?>" />
     <meta property="og:site_name" content="<?php echo he($app_name); ?>" />
     <meta property="og:description" content="My first app" />
     <meta property="fb:app_id" content="<?php echo AppInfo::appID(); ?>" />
 
-    <script type="text/javascript" src="/javascript/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="javascript/jquery-1.7.1.min.js"></script>
 
     <script type="text/javascript">
       function logResponse(response) {
@@ -175,28 +180,30 @@ $app_name = idx($app_info, 'name', '');
   <body>
     <div id="fb-root"></div>
     <script type="text/javascript">
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '<?php echo AppInfo::appID(); ?>', // App ID
-          channelUrl : '//<?php echo $_SERVER["HTTP_HOST"]; ?>/channel.html', // Channel File
-          status     : true, // check login status
-          cookie     : true, // enable cookies to allow the server to access the session
-          xfbml      : true // parse XFBML
-        });
+	$(document).ready(function(){
+		window.fbAsyncInit = function() {
+			FB.init({
+				appId      : '<?php echo AppInfo::appID(); ?>', // App ID
+				channelUrl : '//<?php echo $_SERVER["HTTP_HOST"]; ?>/channel.html', // Channel File
+				status     : true, // check login status
+				cookie     : true, // enable cookies to allow the server to access the session
+				xfbml      : true // parse XFBML
+			});
+		
+			(function() {
+				var e = document.createElement('script');
+				e.async = true;
+				e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+				document.getElementById('fb-root').appendChild(e);
+			}());
+		
+			FB.Event.subscribe('auth.login', function(response) {
+			window.location = window.location;
+			});
 
-        // Listen to the auth.login which will be called when the user logs in
-        // using the Login button
-        FB.Event.subscribe('auth.login', function(response) {
-          // We want to reload the page now so PHP can read the cookie that the
-          // Javascript SDK sat. But we don't want to use
-          // window.location.reload() because if this is in a canvas there was a
-          // post made to this page and a reload will trigger a message to the
-          // user asking if they want to send data again.
-          window.location = window.location;
-        });
-
-        FB.Canvas.setAutoGrow();
-      };
+			FB.Canvas.setAutoGrow();
+		};
+	 });
 
       // Load the SDK Asynchronously
       (function(d, s, id) {
@@ -215,12 +222,11 @@ $app_name = idx($app_info, 'name', '');
       <div>
         <h1>Welcome, <strong><?php echo he(idx($basic, 'name')); ?></strong></h1>
         <p class="tagline">
-          This is your app
           <a href="<?php echo he(idx($app_info, 'link'));?>" target="_top"><?php echo he($app_name); ?></a>
         </p>
 
         <div id="share-app">
-          <p>Share your app:</p>
+          <p>Share this app:</p>
           <ul>
             <li>
               <a href="#" class="facebook-button" id="postToWall" data-url="<?php echo AppInfo::getUrl(); ?>">
@@ -242,7 +248,7 @@ $app_name = idx($app_info, 'name', '');
       </div>
       <?php } else { ?>
       <div>
-        <h1>Welcome.  Click the button to start using the app.</h1>
+        <h1>Welcome.  Sign in to start using Post Delay.</h1>
         <div class="fb-login-button" data-scope="user_likes,user_photos"></div>
       </div>
       <?php } ?>
@@ -250,7 +256,6 @@ $app_name = idx($app_info, 'name', '');
 
     <section id="get-started">
       <p>This is my app, yo!</p>
-      <a href="https://devcenter.heroku.com/articles/facebook" target="_top" class="button">Learn How to Edit This App</a>
     </section>
 
     <?php
@@ -353,32 +358,5 @@ $app_name = idx($app_info, 'name', '');
       }
     ?>
 
-    <section id="guides" class="clearfix">
-      <h1>Learn More About Heroku &amp; Facebook Apps</h1>
-      <ul>
-        <li>
-          <a href="https://www.heroku.com/?utm_source=facebook&utm_medium=app&utm_campaign=fb_integration" target="_top" class="icon heroku">Heroku</a>
-          <p>Learn more about <a href="https://www.heroku.com/?utm_source=facebook&utm_medium=app&utm_campaign=fb_integration" target="_top">Heroku</a>, or read developer docs in the Heroku <a href="https://devcenter.heroku.com/" target="_top">Dev Center</a>.</p>
-        </li>
-        <li>
-          <a href="https://developers.facebook.com/docs/guides/web/" target="_top" class="icon websites">Websites</a>
-          <p>
-            Drive growth and engagement on your site with
-            Facebook Login and Social Plugins.
-          </p>
-        </li>
-        <li>
-          <a href="https://developers.facebook.com/docs/guides/mobile/" target="_top" class="icon mobile-apps">Mobile Apps</a>
-          <p>
-            Integrate with our core experience by building apps
-            that operate within Facebook.
-          </p>
-        </li>
-        <li>
-          <a href="https://developers.facebook.com/docs/guides/canvas/" target="_top" class="icon apps-on-facebook">Apps on Facebook</a>
-          <p>Let users find and connect to their friends in mobile apps and games.</p>
-        </li>
-      </ul>
-    </section>
   </body>
 </html>
