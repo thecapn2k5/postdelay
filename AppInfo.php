@@ -20,16 +20,31 @@ class AppInfo {
    * @return the appID for this app
    */
   public static function appID() {
-	#return '163628067121578';
-    return getenv('FACEBOOK_APP_ID');
+#echo "App ID ", AppInfo::appID(), " App Secret ", (string) AppInfo::appSecret();
+#echo "<br>App ID 497389580317915 App Secret f58ae5e2d4aafeff7c6a0f5f15734fec = Dev App";
+#echo "<br>App ID 163628067121578 App Secret 8f96b758eb85189d6f7ba8505e291d61 = Main App";
+	if ($_SERVER['REMOTE_ADDR'] == '::1') {
+		# localhost
+		return '497389580317915';
+	} else {
+		# hostgator account
+		return '163628067121578';
+	}
+    #return getenv('FACEBOOK_APP_ID');
   }
 
   /**
    * @return the appSecret for this app
    */
   public static function appSecret() {
-    #return '8f96b758eb85189d6f7ba8505e291d61';
-	return getenv('FACEBOOK_SECRET');
+	if ($_SERVER['REMOTE_ADDR'] == '::1') {
+		# localhost
+		return 'f58ae5e2d4aafeff7c6a0f5f15734fec';
+	} else {
+		# hostgator account
+		return '8f96b758eb85189d6f7ba8505e291d61';
+	}
+	#return getenv('FACEBOOK_SECRET');
   }
 
   /**
