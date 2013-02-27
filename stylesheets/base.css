@@ -13,6 +13,10 @@ body {
   margin: 20px;
 }
 
+hr {
+  color: #B3B3B3;
+}
+
 a:link, a:visited {
   color: #3b5998;
   font-weight: bold;
@@ -69,7 +73,7 @@ header .tagline {
 
 #share-app {
   float: right;
-  width: 344px;
+  width: 346px;
 }
 
 #share-app ul {
@@ -180,88 +184,20 @@ header .tagline {
   font-family: "HybreaRegular";
   font-size: 22px;
 }
-/* ------------------------------------------ */
 
-/* =guides/samples spacing
---------------------------------------------- */
-#guides h1,
-#samples h1 {
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-#guides, #samples {
-  padding: 20px 5px 20px 10px;
-}
-
-#guides ul li,
-#samples .list {
-  float: left;
-  margin-right: 3px;
-  width: 172px;
-}
-
-#guides ul li p,
-#samples ul {
-  padding: 0 4px;
-}
-/* ------------------------------------------ */
-
-/* =guides
---------------------------------------------- */
-#guides {
-  border-bottom: 1px solid #b3b3b3;
-  border-left: 1px solid #b3b3b3;
-  border-right: 1px solid #b3b3b3;
-}
-
-#guides ul li {
-  font-size: 11px;
-  list-style: none;
-}
-
-#guides ul li p {
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  line-height: 20px;
-  text-align: justify;
-}
-
-#guides ul li a.icon {
-  background: url("../images/sprites.png") no-repeat;
-  display: block;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 14px;
-  margin-bottom: 10px;
-  padding-top: 124px;
-  text-align: center;
-}
-
-#guides ul li a.websites {
-  background-position: 35px -87px;
-}
-
-#guides ul li a.mobile-apps {
-  background-position: 35px -231px;
-}
-
-#guides ul li a.apps-on-facebook {
-  background-position: 35px -375px;
-}
-
-#guides ul li a.heroku {
-  background-position: 35px -519px;
-}
 /* ------------------------------------------ */
 
 /* =samples
 --------------------------------------------- */
 #samples {
-  background-image: url("../images/samples-bg.png");
-  border-bottom: 1px solid #dadada;
+  padding: 20px 5px 20px 10px;
   border-left: 1px solid #b3b3b3;
   border-right: 1px solid #b3b3b3;
-  border-top: 1px solid #fff;
+}
+
+#samples h1 {
+  margin-bottom: 15px;
+  text-align: center;
 }
 
 #samples h3 {
@@ -273,7 +209,14 @@ header .tagline {
   text-align: center;
 }
 
+#samples .list {
+  float: left;
+  margin-right: 3px;
+  width: 172px;
+}
+
 #samples ul {
+  padding: 0 4px;
   background: url("../images/picture-sketch.png") 4px 8px;
   background-repeat: repeat-y;
   height: 161px;
@@ -339,11 +282,7 @@ header .tagline {
   text-indent: -9999px;
 }
 
-
-/* ------------------------------------------ */
-
-/* =clearfix
---------------------------------------------- */
+/* clearfix */
 .clearfix:after {
   clear: both;
   content: ".";
@@ -356,4 +295,98 @@ header .tagline {
 
 .clearfix {
   zoom: 1;
+}
+
+.hideme {
+   display: none;
+}
+
+/* css for timepicker */
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+.ui-timepicker-rtl{ direction: rtl; }
+.ui-timepicker-rtl dl { text-align: right; }
+.ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }
+
+/* #newpost */
+#newpost {
+  padding: 20px 5px 20px 10px;
+  border-left: 1px solid #b3b3b3;
+  border-right: 1px solid #b3b3b3;
+}
+
+#newpost button {
+   background-color: #5B74A8;
+   color: #FFFFFF;
+   font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+}
+
+/* posts */
+#posts {
+  padding: 20px 5px 20px 10px;
+  border-bottom: 1px solid #b3b3b3;
+  border-left: 1px solid #b3b3b3;
+  border-right: 1px solid #b3b3b3;
+}
+
+.post {
+   border: 1px solid #B4BBCD;
+   margin-bottom: 5px;
+}
+
+.postbottom {
+   padding: 3px;
+   background-color: #F2F2F2;
+   text-align: right;
+}
+
+.postbottom button {
+   background-color: #5B74A8;
+   color: #FFFFFF;
+   font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+}
+
+.postbottom .save {
+   float: left;
+   font-size: 11px;
+}
+
+.posttextarea {
+   padding-top: 5px;
+   padding-right: 3px;
+   padding-left: 3px;
+   width: 99%;
+   border: none;
+   overflow: hidden;
+   height: auto;
+   
+}
+
+.postbottom .datetimepicker {
+   width: 100px;
+   background: none;
+   border: none;
+   color: #999999;
+}
+
+.time_to_postspan {
+   display: none;
+}
+
+.confirmdelete {
+   padding-left: 3px;
+   padding-right: 3px;
+   padding-top: 5px;
+   background-color: #c41515;
+   color: white;
+}
+
+#timezone {
+   border: none;
+   color: #999999;
 }

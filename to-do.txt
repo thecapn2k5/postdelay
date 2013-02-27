@@ -1,0 +1,12 @@
+Time Zone
+   prompt on first run or put a default
+   auto-set the time zone on page load
+
+cron
+   make it autorun
+   factor in time zone
+   put in the command to actually post it
+
+Add "loadPosts();" isn't loading the new post.
+   I've already verified auto-commit
+   I just made the page refresh.  This is ugly.  fix it.
