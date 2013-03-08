@@ -94,7 +94,6 @@ if ($action == 'add') {
 
    $fb_user_id = $mysqli->real_escape_string($vars['fb_user_id']);
    $timezone = $mysqli->real_escape_string($vars['timezone']);
-   $delta = $mysqli->real_escape_string($vars['delta']);
 
    // delete any possible old ones
    $query = "DELETE FROM `timezones` WHERE `fb_user_id`=$fb_user_id";
@@ -106,7 +105,7 @@ if ($action == 'add') {
    }
    
    // add the time zone
-   $query = "INSERT INTO `timezones` (`fb_user_id`, `timezone`, `delta`) VALUES ($fb_user_id, \"$timezone\", \"$delta\")";
+   $query = "INSERT INTO `timezones` (`fb_user_id`, `timezone`) VALUES ($fb_user_id, \"$timezone\")";
    $result = $mysqli->query($query);
    if (!$result) {
       printf("%s\n", $mysqli->error);

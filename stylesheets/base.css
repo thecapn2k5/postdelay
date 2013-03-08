@@ -390,3 +390,7 @@ header .tagline {
    border: none;
    color: #999999;
 }
+
+#timezonediv {
+   display: inline-block;
+}

@@ -113,6 +113,21 @@ class MySQL {
    }
    
    
+   public static function getTimezone($fb_user_id) {
+      $mysqli = MySQL::connect();
+      /* Select queries return a resultset */
+      $return = "";
+      $fb_user_id = $mysqli->real_escape_string($fb_user_id);
+      if ($result = $mysqli->query("SELECT `fb_user_id`, `timezone` FROM `timezones` WHERE `fb_user_id`=$fb_user_id", MYSQLI_USE_RESULT)) {
+         while ($row = $result->fetch_array(MYSQLI_ASSOC)){
+            $return = $row['timezone'];
+         }
+         /* free result set */
+         $result->close();
+      }
+      $mysqli->close();
+      return $return;
+   }
    
    
    

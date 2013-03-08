@@ -64,9 +64,11 @@ if ($connected) {
 }
 
 // set cookies for auth
-$expire = time()+60*60*24; // 1 day
-$token = MySQL::set_token($app_user_id);
-setcookie($app_user_id, $token, $expire);
+if ($app_user_id) {
+   $expire = time()+60*60*24; // 1 day
+   $token = MySQL::set_token($app_user_id);
+   setcookie($app_user_id, $token, $expire);
+}
 ?>
 <!DOCTYPE html>
 <html xmlns:fb="http://ogp.me/ns/fb#" lang="en">
@@ -391,19 +393,62 @@ setcookie($app_user_id, $token, $expire);
                </ul>
             </div>
          </div>
+ 
+         <div id="timezonediv">
+         Select your time zone:
+         <select id="timezone">
+            <?php
+            $list = DateTimeZone::listAbbreviations();
+            $idents = DateTimeZone::listIdentifiers();
+
+            $data = $offset = $added = array();
+            foreach ($list as $abbr => $info) {
+               foreach ($info as $zone) {
+                  if ( ! empty($zone['timezone_id']) AND !in_array($zone['timezone_id'], $added) AND in_array($zone['timezone_id'], $idents)) {
+                     $z = new DateTimeZone($zone['timezone_id']);
+                     $c = new DateTime(null, $z);
+                     $zone['time'] = $c->format('H:i a');
+                     $data[] = $zone;
+                     $offset[] = $z->getOffset($c);
+                     $added[] = $zone['timezone_id'];
+                  }
+               }
+            }
+
+            array_multisort($offset, SORT_ASC, $data);
+            $timezones = array();
+            $current_timezone = MySQL::getTimezone($app_user_id);
+            if ($current_timezone) {
+               echo "<option>" . $current_timezone . "</option>";
+            } else {
+               echo "no timezone chosen";
+            }
+            foreach ($data as $key => $row) {
+               $offset = $row['offset'];
+               $hours = $offset / 3600;
+               $remainder = $offset % 3600;
+               $sign = $hours > 0 ? '+' : '-';
+               $hour = (int) abs($hours);
+               $minutes = (int) abs($remainder / 60);
+
+               if ($hour == 0 AND $minutes == 0) {
+                  $sign = ' ';
+               }
+               $formatted = 'GMT' . $sign . str_pad($hour, 2, '0', STR_PAD_LEFT).':'. str_pad($minutes,2, '0');
+               $timezones[$row['timezone_id']] = $formatted . ' ' . $row['timezone_id'];
+            }
+            foreach ($timezones as $option){
+               echo "<option>" . $option . "</option>";
+            }
+            ?>
+         </select>
+         </div>
          <?php } else { ?>
             <div>
                <h1>Welcome.  Sign in to start using Post Delay.</h1>
                <div class="fb-login-button" data-scope="user_likes,user_photos"></div>
             </div>
          <?php } ?>
-         Select your time zone:
-         <select id="timezone">
-            <option value="6.00">Eastern</option>
-            <option value="7.00">Central</option>
-            <option value="8.00">Mountain</option>
-            <option value="9.00">Pacific</option>
-         </select>
       </header>
 
 	
